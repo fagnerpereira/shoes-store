@@ -45,3 +45,16 @@ store = Store.first
 product = Product.first
 Sale.create(store: store, product: product, quantity: 1)
 Sale.create(store: store, product: product, quantity: 3)
+
+# stores = Store.all
+# products = Product.all
+# year = 2023
+# months = [1]
+# days = (1..30).to_a
+#
+# Sale.create(
+#   store: stores.first(5).sample,
+#   product: products.sample,
+#   quantity: (1..15).to_a.sample,
+#   created_at: "#{year}-#{months.sample}-#{days.sample}"
+# )
