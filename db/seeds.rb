@@ -18,3 +18,17 @@ Store.insert_all([
   { name: 'ALDO Auburn Mall' },
   { name: 'ALDO Waterloo Premium Outlets' }
 ])
+
+products = [
+  'ADERI', 'MIRIRA', 'CAELAN',
+  'BUTAUD', 'SCHOOLER', 'SODANO',
+  'MCTYRE', 'CADAUDIA', 'RASIEN',
+  'WUMA', 'GRELIDIEN', 'CADEVEN',
+  'SEVIDE', 'ELOILLAN', 'BEODA',
+  'VENDOGNUS', 'ABOEN', 'ALALIWEN',
+  'GREG', 'BOZZA'
+]
+Product.destroy_all if Product.any?
+Product.insert_all(
+  products.map { |name| { name: name } }
+)
