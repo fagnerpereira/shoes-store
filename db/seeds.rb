@@ -5,21 +5,7 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-Store.destroy_all if Store.any?
-Store.insert_all([
-  { name: 'ALDO Destiny USA Mall' },
-  { name: 'ALDO Centre Eaton' },
-  { name: 'ALDO Pheasant Lane Mall' },
-  { name: 'ALDO Holyoke Mall' },
-  { name: 'ALDO Maine Mall' },
-  { name: 'ALDO Crossgates Mall' },
-  { name: 'ALDO Burlington Mall' },
-  { name: 'ALDO Solomon Pond Mall' },
-  { name: 'ALDO Auburn Mall' },
-  { name: 'ALDO Waterloo Premium Outlets' }
-])
-
-products = [
+PRODUCTS = [
   'ADERI', 'MIRIRA', 'CAELAN',
   'BUTAUD', 'SCHOOLER', 'SODANO',
   'MCTYRE', 'CADAUDIA', 'RASIEN',
@@ -27,15 +13,35 @@ products = [
   'SEVIDE', 'ELOILLAN', 'BEODA',
   'VENDOGNUS', 'ABOEN', 'ALALIWEN',
   'GREG', 'BOZZA'
-]
+].freeze
+STORES = [
+  'ALDO Centre Eaton', 'ALDO Destiny USA Mall',
+  'ALDO Pheasant Lane Mall', 'ALDO Holyoke Mall',
+  'ALDO Maine Mall', 'ALDO Crossgates Mall',
+  'ALDO Burlington Mall', 'ALDO Solomon Pond Mall',
+  'ALDO Auburn Mall', 'ALDO Waterloo Premium Outlets'
+].freeze
+
+Sale.destroy_all if Sale.any?
+Inventory.destroy_all if Inventory.any?
 Product.destroy_all if Product.any?
-Product.insert_all(
-  products.map { |name| { name: name } }
+Store.destroy_all if Store.any?
+
+Store.insert_all(
+  STORES.map { |name| { name: name } }
 )
 
-Inventory.destroy_all if Inventory.any?
+Product.insert_all(
+  PRODUCTS.map { |name| { name: name } }
+)
+
 Store.all.each do |store|
   Product.all.each do |product|
     Inventory.create(store: store, product: product, quantity: 100)
   end
 end
+
+store = Store.first
+product = Product.first
+Sale.create(store: store, product: product, quantity: 1)
+Sale.create(store: store, product: product, quantity: 3)
