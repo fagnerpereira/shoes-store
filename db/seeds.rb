@@ -32,3 +32,10 @@ Product.destroy_all if Product.any?
 Product.insert_all(
   products.map { |name| { name: name } }
 )
+
+Inventory.destroy_all if Inventory.any?
+Store.all.each do |store|
+  Product.all.each do |product|
+    Inventory.create(store: store, product: product, quantity: 100)
+  end
+end
