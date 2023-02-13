@@ -3,5 +3,5 @@ require:
   - rubocop-minitest
   - rubocop-rails
 
-Documentation:
+Style/Documentation:
   Enabled: false
