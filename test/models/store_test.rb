@@ -12,7 +12,7 @@ class StoreTest < ActiveSupport::TestCase
 
   test 'should not save without name' do
     store = Store.new
-    assert_not store.save
+    assert_not store.valid?
   end
 
   test 'should not save duplicated name' do

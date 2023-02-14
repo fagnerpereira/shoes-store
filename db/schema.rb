@@ -37,7 +37,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_13_173703) do
     t.bigint "store_id"
     t.bigint "product_id"
     t.integer "quantity", default: 1, null: false
-    t.jsonb "data", null: false
+    t.jsonb "metadata", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_sales_on_product_id"

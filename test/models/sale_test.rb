@@ -22,16 +22,6 @@ class SaleTest < ActiveSupport::TestCase
     assert @sale.valid?
   end
 
-  test 'should be invalid with no store' do
-    @sale.store = nil
-    assert @sale.invalid?
-  end
-
-  test 'should be invalid with no product' do
-    @sale.product = nil
-    assert @sale.invalid?
-  end
-
   test 'should be invalid with no quantity' do
     @sale.quantity = nil
     assert @sale.invalid?

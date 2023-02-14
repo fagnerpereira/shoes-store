@@ -2,6 +2,8 @@
 
 product_a:
   name: Product A
+  price: 50.99
 
 product_b:
   name: Product B
+  price: 99.99

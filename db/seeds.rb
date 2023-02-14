@@ -47,22 +47,8 @@ Store.transaction do
 
   store = Store.first
   product = Product.first
-  Sale.create(
-    store:,
-    product:,
-    data: {
-      store: { id: store.id, name: store.name },
-      product: { id: product.id, name: product.name, price: product.price }
-    }
-  )
-  Sale.create(
-    store:,
-    product:,
-    data: {
-      store: { id: store.id, name: store.name },
-      product: { id: product.id, name: product.name, price: product.price }
-    }
-  )
+  Sale.create(store:, product:)
+  Sale.create(store:, product:)
 end
 # stores = Store.all
 # products = Product.all
