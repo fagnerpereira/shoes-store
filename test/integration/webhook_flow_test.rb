@@ -1,27 +1,47 @@
 require 'test_helper'
 
 class ReceivedWebhookFlowTest < ActionDispatch::IntegrationTest
-  test 'when a webhook is received with correct parameters' do
-    store = Store.create(name: 'Store A')
-    product = Product.create(name: 'Shoe A')
-    inventory = Inventory.create(store:, product:, quantity: 10)
+  setup do
+    @inventory = Inventory.create(
+      store: stores(:store_a),
+      product: products(:product_a),
+      quantity: 100
+    )
+  end
 
-    assert_equal Sale.where(store:, product:).count, 0
+  test 'should create a webhook and then process it' do
+    assert_nil(
+      Sale.find_by(
+        store: stores(:store_a),
+        product: products(:product_a),
+        quantity: 2
+      )
+    )
+    assert_difference('Webhook.count') do
+      post webhooks_url, params: {
+        'store' => 'Store A',
+        'model' => 'Shoe A',
+        'inventory' => 99
+      }
+    end
 
-    post webhooks_url, params: {
-      'store' => 'Store A',
-      'model' => 'Shoe A',
-      'inventory' => 9
-    }
+    assert_not_nil(
+      Sale.find_by(
+        store: stores(:store_a),
+        product: products(:product_a),
+        quantity: 1
+      )
+    )
 
-    sale_quantity = inventory.quantity - 9
-    assert_equal Sale.where(store:, product:, quantity: sale_quantity).count, 1
-    inventory.reload
-    assert_equal inventory.quantity, 9
-    assert_equal Webhook.last.payload, {
-      'store' => 'Store A',
-      'model' => 'Shoe A',
-      'inventory' => 9
-    }
+    @inventory.reload
+
+    assert_equal @inventory.quantity, 99
+    assert_equal(
+      Webhook.last.payload, {
+        'store' => 'Store A',
+        'model' => 'Shoe A',
+        'inventory' => 9
+      }
+    )
   end
 end

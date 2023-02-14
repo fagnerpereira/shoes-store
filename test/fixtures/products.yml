@@ -1,7 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: ProductA
+product_a:
+  name: Product A
 
-two:
-  name: ProductB
+product_b:
+  name: Product B
