@@ -21,31 +21,49 @@ STORES = [
   'ALDO Burlington Mall', 'ALDO Solomon Pond Mall',
   'ALDO Auburn Mall', 'ALDO Waterloo Premium Outlets'
 ].freeze
+PRICES = (30.50..119.99).step(2.7).to_a
 
-Sale.destroy_all if Sale.any?
-Inventory.destroy_all if Inventory.any?
-Product.destroy_all if Product.any?
-Store.destroy_all if Store.any?
+Store.transaction do
+  Sale.destroy_all if Sale.any?
+  Inventory.destroy_all if Inventory.any?
+  Product.destroy_all if Product.any?
+  Store.destroy_all if Store.any?
 
-Store.insert_all(
-  STORES.map { |name| { name: name } }
-)
+  Store.insert_all(
+    STORES.map { |name| { name: name } }
+  )
 
-Product.insert_all(
-  PRODUCTS.map { |name| { name: name } }
-)
+  Product.insert_all(
+    PRODUCTS.map do |name|
+      { name: name, price: PRICES.sample.round(2) }
+    end
+  )
 
-Store.all.each do |store|
-  Product.all.each do |product|
-    Inventory.create(store: store, product: product, quantity: 150)
+  Store.all.each do |store|
+    Product.all.each do |product|
+      Inventory.create(store: store, product: product, quantity: 150)
+    end
   end
+
+  store = Store.first
+  product = Product.first
+  Sale.create(
+    store:,
+    product:,
+    data: {
+      store: { id: store.id, name: store.name },
+      product: { id: product.id, name: product.name, price: product.price }
+    }
+  )
+  Sale.create(
+    store:,
+    product:,
+    data: {
+      store: { id: store.id, name: store.name },
+      product: { id: product.id, name: product.name, price: product.price }
+    }
+  )
 end
-
-store = Store.first
-product = Product.first
-Sale.create(store: store, product: product, quantity: 1)
-Sale.create(store: store, product: product, quantity: 3)
-
 # stores = Store.all
 # products = Product.all
 # year = 2023

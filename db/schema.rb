@@ -26,16 +26,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_13_173703) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
+    t.float "price", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_products_on_name", unique: true
   end
 
   create_table "sales", force: :cascade do |t|
-    t.bigint "store_id", null: false
-    t.bigint "product_id", null: false
-    t.integer "quantity"
+    t.bigint "store_id"
+    t.bigint "product_id"
+    t.integer "quantity", default: 1, null: false
+    t.jsonb "data", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_sales_on_product_id"
@@ -43,7 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_13_173703) do
   end
 
   create_table "stores", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_stores_on_name", unique: true
