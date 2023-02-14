@@ -1,17 +1,10 @@
-<%= area_chart Sale.group_by_day(:created_at).count %>
-<%= bar_chart Sale.joins(:store)
-                  .group('stores.name')
-                  .limit(5)
-                  .count
-                  .sort_by { |_, count| count }.reverse %>
-<%= bar_chart Sale.joins(:product)
-                  .group('products.name')
-                  .limit(5)
-                  .count
-                  .sort_by { |_, count| count }.reverse %>
+<%= turbo_stream_from 'sales' %>
+
+<%= render 'all_sales_chart' %>
+<%= render 'top_sales_by_store_chart' %>
+<%= render 'top_sales_by_product_chart' %>
 
 <h1>Latest Sales</h1>
-<%= turbo_stream_from 'sales' %>
 <table>
   <thead>
     <tr>
@@ -22,6 +15,6 @@
     </tr>
   </thead>
   <tbody id="sales" data-controller="sales">
-    <%= render @sales.all.order(created_at: :desc).take(50) %>
+    <%= render @sales.limit(50).order(created_at: :desc) %>
   </tbody>
 </table>

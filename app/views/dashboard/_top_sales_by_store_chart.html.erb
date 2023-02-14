@@ -1,0 +1,8 @@
+<div id="sales_by_store_container">
+  <%= bar_chart Sale.joins(:store)
+                    .group('stores.name')
+                    .limit(5)
+                    .count
+                    .sort_by { |_, count| count }.reverse,
+                    id: SecureRandom.uuid %>
+</div>
