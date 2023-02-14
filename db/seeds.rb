@@ -37,7 +37,7 @@ Product.insert_all(
 
 Store.all.each do |store|
   Product.all.each do |product|
-    Inventory.create(store: store, product: product, quantity: 100)
+    Inventory.create(store: store, product: product, quantity: 150)
   end
 end
 

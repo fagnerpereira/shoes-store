@@ -23,7 +23,7 @@
     </tr>
   </thead>
   <tbody>
-    <% Sale.all.limit(10).order(created_at: :desc).each do |sale| %>
+    <% Sale.all.order(created_at: :desc).each do |sale| %>
       <tr>
         <td><%= sale.store.name %></td>
         <td><%= sale.product.name %></td>

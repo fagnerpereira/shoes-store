@@ -8,6 +8,7 @@ class ReceivedWebhookFlowTest < ActionDispatch::IntegrationTest
       quantity: 100
     )
   end
+
   test 'should create a webhook and then process it' do
     assert_nil(created_sale)
     assert_difference('Webhook.count') do

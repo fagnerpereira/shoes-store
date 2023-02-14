@@ -13,8 +13,7 @@ class WebhooksController < ApplicationController
     store = Store.find_by!(name: webhook.payload['store'])
     product = Product.find_by!(name: webhook.payload['model'])
     inventory = Inventory.find_by!(store: store, product: product)
-    sale_quantity = inventory.quantity - webhook.payload['inventory'].to_i
-    Sale.create!(store: store, product: product, quantity: sale_quantity)
+    Sale.create!(store: store, product: product, quantity: 1)
     inventory.update(quantity: webhook.payload['inventory'].to_i)
 
     # Webhooks::ProcessJob.perform_later(webhook)
