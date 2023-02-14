@@ -1,9 +1,21 @@
 class Sale < ApplicationRecord
-  belongs_to :store
-  belongs_to :product
+  belongs_to :store, optional: true
+  belongs_to :product, optional: true
 
   validates :quantity, presence: true
-  before_validation :set_metadata
+  before_validation :set_metadata, on: :create
+
+  def store_name
+    metadata.dig 'store', 'name'
+  end
+
+  def product_name
+    metadata.dig 'product', 'name'
+  end
+
+  def price
+    metadata.dig 'product', 'price'
+  end
 
   private
 
