@@ -3,8 +3,8 @@ require "test_helper"
 class SaleTest < ActiveSupport::TestCase
   setup do
     @sale = Sale.new(
-      store: stores(:one),
-      product: products(:one),
+      store: stores(:store_a),
+      product: products(:product_a),
       quantity: 2
     )
   end
@@ -15,8 +15,8 @@ class SaleTest < ActiveSupport::TestCase
 
   test 'should be valid with duplicated [store, product] scope' do
     Sale.create(
-      store: stores(:one),
-      product: products(:one),
+      store: stores(:store_a),
+      product: products(:product_a),
       quantity: 5
     )
     assert @sale.valid?

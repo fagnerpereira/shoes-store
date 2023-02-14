@@ -14,13 +14,13 @@ class ReceivedWebhookFlowTest < ActionDispatch::IntegrationTest
       Sale.find_by(
         store: stores(:store_a),
         product: products(:product_a),
-        quantity: 2
+        quantity: 1
       )
     )
     assert_difference('Webhook.count') do
       post webhooks_url, params: {
-        'store' => 'Store A',
-        'model' => 'Shoe A',
+        'store' => stores(:store_a).name,
+        'model' => products(:product_a).name,
         'inventory' => 99
       }
     end
@@ -38,9 +38,9 @@ class ReceivedWebhookFlowTest < ActionDispatch::IntegrationTest
     assert_equal @inventory.quantity, 99
     assert_equal(
       Webhook.last.payload, {
-        'store' => 'Store A',
-        'model' => 'Shoe A',
-        'inventory' => 9
+        'store' => stores(:store_a).name,
+        'model' => products(:product_a).name,
+        'inventory' => '99'
       }
     )
   end

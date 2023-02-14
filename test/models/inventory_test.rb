@@ -1,10 +1,10 @@
-require "test_helper"
+require 'test_helper'
 
 class InventoryTest < ActiveSupport::TestCase
   setup do
     @inventory = Inventory.new(
-      store: stores(:one),
-      product: products(:one),
+      store: stores(:store_a),
+      product: products(:product_a),
       quantity: 100
     )
   end
@@ -14,8 +14,8 @@ class InventoryTest < ActiveSupport::TestCase
 
   test 'should be valid with unique store and product scope' do
     Inventory.create(
-      store: stores(:one),
-      product: products(:two),
+      store: stores(:store_a),
+      product: products(:product_b),
       quantity: 100
     )
     assert @inventory.valid?
@@ -38,8 +38,8 @@ class InventoryTest < ActiveSupport::TestCase
 
   test 'should be invalid with duplicated store and product' do
     Inventory.create(
-      store: stores(:one),
-      product: products(:one),
+      store: stores(:store_a),
+      product: products(:product_a),
       quantity: 100
     )
     assert @inventory.invalid?
