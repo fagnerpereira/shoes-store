@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
   def index
-    @stores = Store.all
+    @sales = Sale.all
   end
 end

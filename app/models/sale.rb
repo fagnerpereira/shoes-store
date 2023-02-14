@@ -4,6 +4,7 @@ class Sale < ApplicationRecord
 
   validates :quantity, presence: true
   before_validation :set_metadata, on: :create
+  after_create_commit -> { broadcast_prepend_to 'sales' }
 
   def store_name
     metadata.dig 'store', 'name'
