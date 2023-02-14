@@ -4,13 +4,19 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   connect() {
     let salesTable = document.getElementById('sales');
+    let limit = 50;
 
     document.addEventListener('turbo:before-stream-render', (event) => {
       if (event.detail.newStream.attributes.action.value === 'prepend') {
         let rowsCount = salesTable.rows.length;
 
-        if (rowsCount > 50) {
-          salesTable.deleteRow(rowsCount - 1);
+        if (rowsCount > limit) {
+          let rowsToDelete = rowsCount - limit;
+          let lastRow = rowsCount - 1;
+
+          for (let i = 0; i < rowsToDelete; i++) {
+            salesTable.deleteRow(lastRow--);
+          }
         }
         //console.log(document.getElementById('sales').rows.length);
       }
