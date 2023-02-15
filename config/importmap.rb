@@ -7,3 +7,6 @@ pin "@hotwired/stimulus-loading", to: "stimulus-loading.js", preload: true
 pin_all_from "app/javascript/controllers", under: "controllers"
 pin "chartkick", to: "chartkick.js"
 pin "Chart.bundle", to: "Chart.bundle.js"
+pin "@rails/actioncable", to: "https://ga.jspm.io/npm:@rails/actioncable@7.0.4-2/app/assets/javascripts/actioncable.esm.js"
+pin "@rails/actioncable", to: "actioncable.esm.js"
+pin_all_from "app/javascript/channels", under: "channels"
