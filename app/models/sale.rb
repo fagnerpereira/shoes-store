@@ -28,14 +28,11 @@ class Sale < ApplicationRecord
   end
 
   def broadcast_all_sales
-    ActionCable.server.broadcast 'charts', self
-    #broadcast_update_to 'charts', self
-    #DashboardChannel.broadcast_to 'charts', self
-    #broadcast_replace_later_to(
-    #  'charts',
-    #  partial: 'dashboard/all_sales_chart',
-    #  target: 'all_sales_container'
-    #)
+    ActionCable.server.broadcast 'charts', {
+      created_at: created_at,
+      store_name: store_name,
+      product_name: product_name
+    }
   end
 
   def broadcast_top_sales_by_store

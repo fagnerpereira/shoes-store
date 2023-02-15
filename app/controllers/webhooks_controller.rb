@@ -11,7 +11,7 @@ class WebhooksController < ApplicationController
     # 2 approach is put this inside a job and after saving, call ProcessJob
     year = 2022
     months = (6..12).to_a
-    days = (1..30).to_a
+    days = (1..31).to_a
     #
     # Sale.create(
     #   store: stores.first(5).sample,
