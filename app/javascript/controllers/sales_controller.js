@@ -5,9 +5,6 @@ import { Turbo } from "@hotwired/turbo-rails"
 // Connects to data-controller="sales"
 export default class extends Controller {
   connect() {
-    console.log(Turbo)
-
-
     let salesTable = document.getElementById('sales');
     let limit = 50;
 

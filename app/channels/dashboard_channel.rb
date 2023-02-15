@@ -1,6 +1,6 @@
 class DashboardChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "sales"
+    stream_from 'charts'
   end
 
   def unsubscribed

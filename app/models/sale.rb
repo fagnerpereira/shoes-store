@@ -21,18 +21,21 @@ class Sale < ApplicationRecord
   private
 
   def broadcast_later
-    broadcast_prepend_later_to 'sales'
+    # broadcast_prepend_later_to 'sales'
     broadcast_all_sales
-    broadcast_top_sales_by_store
-    broadcast_top_sales_by_product
+    #broadcast_top_sales_by_store
+    #broadcast_top_sales_by_product
   end
 
   def broadcast_all_sales
-    broadcast_replace_later_to(
-      'sales',
-      partial: 'dashboard/all_sales_chart',
-      target: 'all_sales_container'
-    )
+    ActionCable.server.broadcast 'charts', self
+    #broadcast_update_to 'charts', self
+    #DashboardChannel.broadcast_to 'charts', self
+    #broadcast_replace_later_to(
+    #  'charts',
+    #  partial: 'dashboard/all_sales_chart',
+    #  target: 'all_sales_container'
+    #)
   end
 
   def broadcast_top_sales_by_store
