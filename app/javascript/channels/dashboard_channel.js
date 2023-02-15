@@ -25,6 +25,7 @@ consumer.subscriptions.create("DashboardChannel", {
 });
 
 function updateChartData(chart, key) {
+  // if key is already created then increment it by 1
   let item = chart.dataSource.find(item => {
     if (item[0] === key) {
       item[1] = item[1] + 1;
@@ -32,6 +33,7 @@ function updateChartData(chart, key) {
     }
   })
 
+  // if key is not found then create a new item
   if (item != null) {
     item = [key, 1];
   }
@@ -49,17 +51,3 @@ function generateKey(date, groupByTime = false) {
   }
   return date.toISOString().split('T')[0];
 }
-
-//function generateKey(date, groupByTime = false) {
-//  // 2023-02-15T11:50:53.155Z becomes 2023-02-15T11:50:00.000Z
-//  date.setSeconds(0);
-//  date.setMilliseconds(0);
-//
-//  if (groupByTime === true) {
-//    return date.toISOString();
-//  }
-//
-//  date.setHours(0);
-//  date.setMinutes(0);
-//  return date.toString();
-//}
