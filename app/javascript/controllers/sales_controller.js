@@ -1,6 +1,4 @@
 import { Controller } from "@hotwired/stimulus"
-import { createConsumer } from "@rails/actioncable"
-import { Turbo } from "@hotwired/turbo-rails"
 
 // Connects to data-controller="sales"
 export default class extends Controller {
@@ -24,22 +22,5 @@ export default class extends Controller {
         }
       }
     })
-  }
-
-  handleStreamUpdate(data) {
-    console.log(data)
-    // get the Turbo Streams updates from the data
-    const streamUpdates = Turbo.parseStreamMessage(data)
-
-    // loop through the updates and apply them to the page
-    //streamUpdates.forEach(update => {
-    //  const targetId = update.target
-    //  const target = this.listTarget.querySelector(`[data-id="${targetId}"]`)
-    //  if (target) {
-    //    Turbo.renderStreamUpdate(target, update)
-    //  } else {
-    //    Turbo.renderStreamElement(update)
-    //  }
-    //})
   }
 }
