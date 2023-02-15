@@ -44,11 +44,6 @@ Store.transaction do
       Inventory.create(store: store, product: product, quantity: 150)
     end
   end
-
-  store = Store.first
-  product = Product.first
-  Sale.create(store:, product:)
-  Sale.create(store:, product:)
 end
 # stores = Store.all
 # products = Product.all

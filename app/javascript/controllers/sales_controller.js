@@ -8,6 +8,8 @@ export default class extends Controller {
     let salesTable = document.getElementById('sales');
     let limit = 50;
 
+    // after prepending a new sale, removes last sales from the table
+    // to respect the limit showed
     document.addEventListener('turbo:before-stream-render', (event) => {
       if (event.detail.newStream.attributes.action.value === 'prepend') {
         let rowsCount = salesTable.rows.length;
@@ -20,10 +22,7 @@ export default class extends Controller {
             salesTable.deleteRow(lastRow--);
           }
         }
-        //console.log(document.getElementById('sales').rows.length);
       }
-      //console.log(event.detail.newStream.attributes)
-      //console.log(event.detail.newStream.attributes.action.value === 'prepend')
     })
   }
 

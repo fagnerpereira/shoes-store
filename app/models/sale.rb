@@ -21,7 +21,7 @@ class Sale < ApplicationRecord
   private
 
   def broadcast_later
-    # broadcast_prepend_later_to 'sales'
+    broadcast_prepend_later_to 'sales'
     broadcast_all_sales
     #broadcast_top_sales_by_store
     #broadcast_top_sales_by_product
