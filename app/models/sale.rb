@@ -26,7 +26,9 @@ class Sale < ApplicationRecord
   end
 
   def broadcast_charts_data
-    ActionCable.server.broadcast 'charts', {
+    # DashboardChannel.broadcast_to('charts', 'foo')
+    # ActionCable.server.broadcast('charts', 'foo')
+    DashboardChannel.broadcast_to 'charts', {
       created_at:,
       store_name:,
       product_name:
@@ -36,7 +38,11 @@ class Sale < ApplicationRecord
   def set_metadata
     self.metadata = {
       store: { id: store.id, name: store.name },
-      product: { id: product.id, name: product.name, price: product.price }
+      product: {
+        id: product.id,
+        name: product.name,
+        price: product.price
+      }
     }
   end
 end

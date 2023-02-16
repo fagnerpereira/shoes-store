@@ -1,8 +1,10 @@
-require "test_helper"
+require 'test_helper'
 
 class DashboardChannelTest < ActionCable::Channel::TestCase
-  # test "subscribes" do
-  #   subscribe
-  #   assert subscription.confirmed?
-  # end
+  test 'subscribes and stream for room' do
+    subscribe
+
+    assert subscription.confirmed?
+    assert_has_stream 'charts'
+  end
 end
