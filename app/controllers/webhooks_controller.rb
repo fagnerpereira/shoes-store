@@ -13,12 +13,6 @@ class WebhooksController < ApplicationController
     months = (6..12).to_a
     days = (1..31).to_a
     #
-    # Sale.create(
-    #   store: stores.first(5).sample,
-    #   product: products.sample,
-    #   quantity: (1..15).to_a.sample,
-    #   created_at: "#{year}-#{months.sample}-#{days.sample}"
-    # )
     webhook = Webhook.create!(payload: payload)
     store = Store.find_by!(name: webhook.payload['store'])
     product = Product.find_by!(name: webhook.payload['model'])

@@ -26,8 +26,6 @@ class Sale < ApplicationRecord
   end
 
   def broadcast_charts_data
-    # DashboardChannel.broadcast_to('charts', 'foo')
-    # ActionCable.server.broadcast('charts', 'foo')
     DashboardChannel.broadcast_to 'charts', {
       created_at:,
       store_name:,

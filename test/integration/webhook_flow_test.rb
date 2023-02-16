@@ -19,7 +19,7 @@ class ReceivedWebhookFlowTest < ActionDispatch::IntegrationTest
     @inventory.reload
 
     assert_equal(@inventory.quantity, 99)
-    assert_equal(Webhook.last.payload, webhook_params)
+    assert_equal(Webhook.first.payload, webhook_params)
   end
 
   def created_sale
