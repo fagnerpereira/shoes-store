@@ -4,7 +4,7 @@ class Sale < ApplicationRecord
 
   validates :quantity, presence: true
   before_validation :set_metadata, on: :create
-  after_create_commit :broadcast_later
+  after_create_commit :broadcast_charts_data
 
   def store_name
     metadata.dig 'store', 'name'
@@ -20,13 +20,9 @@ class Sale < ApplicationRecord
 
   private
 
-  def broadcast_later
-    broadcast_prepend_later_to 'sales'
-    broadcast_charts_data
-  end
-
   def broadcast_charts_data
-    DashboardChannel.broadcast_to 'charts', {
+    broadcast_prepend_later_to 'sales'
+    ActionCable.server.broadcast 'charts', {
       created_at:,
       store_name:,
       product_name:
