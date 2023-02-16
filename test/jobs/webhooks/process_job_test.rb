@@ -18,14 +18,6 @@ module Webhooks
 
     private
 
-    def created_sale
-      Sale.find_by(
-        store: @store,
-        product: @product,
-        quantity: 1
-      )
-    end
-
     def webhook_params
       {
         'store' => @store.name,

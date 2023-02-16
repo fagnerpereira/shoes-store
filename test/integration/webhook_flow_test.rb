@@ -2,9 +2,11 @@ require 'test_helper'
 
 class ReceivedWebhookFlowTest < ActionDispatch::IntegrationTest
   setup do
+    @store = stores(:store_a)
+    @product = products(:product_a)
     @inventory = Inventory.create(
-      store: stores(:store_a),
-      product: products(:product_a),
+      store: @store,
+      product: @product,
       quantity: 100
     )
   end
@@ -31,18 +33,10 @@ class ReceivedWebhookFlowTest < ActionDispatch::IntegrationTest
 
   private
 
-  def created_sale
-    Sale.find_by(
-      store: stores(:store_a),
-      product: products(:product_a),
-      quantity: 1
-    )
-  end
-
   def webhook_params
     {
-      'store' => stores(:store_a).name,
-      'model' => products(:product_a).name,
+      'store' => @store.name,
+      'model' => @product.name,
       'inventory' => '99'
     }
   end
