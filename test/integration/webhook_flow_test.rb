@@ -9,25 +9,22 @@ class ReceivedWebhookFlowTest < ActionDispatch::IntegrationTest
     )
   end
 
-  test 'should create a webhook and then process it' do
-    assert_nil(created_sale)
+  test 'should create and process a webhook in background' do
     assert_enqueued_with(job: Webhooks::CreateJob) do
       post webhooks_url, params: webhook_params
     end
     assert_difference('Webhook.count') do
       assert_enqueued_with(job: Webhooks::ProcessJob) do
-        # performs Webhooks::CreateJob
-        perform_enqueued_jobs
+        perform_enqueued_jobs # performs Webhooks::CreateJob
       end
     end
     assert_difference('Sale.count') do
-      # performs Webhooks::ProcessJob
-      perform_enqueued_jobs
+      perform_enqueued_jobs # performs Webhooks::ProcessJob
     end
-
-    @inventory.reload
-
-    assert_equal(@inventory.quantity, webhook_params['inventory'].to_i)
+    assert_equal(
+      @inventory.reload.quantity,
+      webhook_params['inventory'].to_i
+    )
     assert_equal(Webhook.first.payload, webhook_params)
   end
 
