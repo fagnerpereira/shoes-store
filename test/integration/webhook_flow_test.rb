@@ -18,14 +18,15 @@ class ReceivedWebhookFlowTest < ActionDispatch::IntegrationTest
         perform_enqueued_jobs # performs Webhooks::CreateJob
       end
     end
-    assert_difference('Sale.count') do
+
+    assert_equal(Webhook.first.payload, webhook_params)
+    assert_difference -> { Sale.count } => 1, -> { Webhook.count } => -1 do
       perform_enqueued_jobs # performs Webhooks::ProcessJob
     end
     assert_equal(
       @inventory.reload.quantity,
       webhook_params['inventory'].to_i
     )
-    assert_equal(Webhook.first.payload, webhook_params)
   end
 
   private

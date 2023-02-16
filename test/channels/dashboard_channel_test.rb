@@ -5,6 +5,6 @@ class DashboardChannelTest < ActionCable::Channel::TestCase
     subscribe
 
     assert subscription.confirmed?
-    assert_has_stream 'dashboard:charts'
+    assert_has_stream 'charts'
   end
 end

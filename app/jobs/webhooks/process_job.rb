@@ -17,7 +17,7 @@ module Webhooks
       )
       inventory.update!(quantity: webhook.payload['inventory'].to_i)
       webhook.processed!
-      webhook.destroy!
+      webhook.destroy! if webhook.processed?
     end
   end
 end
