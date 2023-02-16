@@ -77,3 +77,5 @@ end
 gem 'chartkick'
 gem 'groupdate'
 gem 'appsignal'
+
+gem "dockerfile-rails", ">= 1.0", :group => :development
