@@ -22,6 +22,8 @@ class ReceivedWebhookFlowTest < ActionDispatch::IntegrationTest
     assert_equal(Webhook.first.payload, webhook_params)
   end
 
+  private
+
   def created_sale
     Sale.find_by(
       store: stores(:store_a),

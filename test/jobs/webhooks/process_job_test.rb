@@ -1,20 +1,39 @@
-require "test_helper"
+require 'test_helper'
 
-class Webhooks::ProcessJobTest < ActiveJob::TestCase
-  test 'process a webhook' do
-    args = {
-      'store' => 'store_name',
-      'model' => 'product_name',
-      'inventory' => '99'
-    }
+module Webhooks
+  class ProcessJobTest < ActiveJob::TestCase
+    setup do
+      @store = stores(:store_a)
+      @product = products(:product_a)
+      @inventory = Inventory.create(store: @store, product: @product, quantity: 100)
+      @webhook = Webhook.create(payload: webhook_params)
+    end
 
-    webhook = Webhook.create(args)
+    test 'process a webhook' do
+      assert_difference('Sale.count') do
+        Webhooks::ProcessJob.perform_now(@webhook)
+      end
+      assert_not_nil(created_sale)
+      assert_equal(@inventory.reload.quantity, webhook_params['inventory'])
+      assert(@webhook.reload.processed?)
+    end
 
-    Webhooks::ProcessJob.perform_now(webhook)
+    private
 
-    webhook.reload
+    def created_sale
+      Sale.find_by(
+        store: @store,
+        product: @product,
+        quantity: 1
+      )
+    end
 
-    assert webhook.processed?
-
+    def webhook_params
+      {
+        'store' => @store.name,
+        'model' => @product.name,
+        'inventory' => 60
+      }
+    end
   end
 end
