@@ -13,7 +13,7 @@ consumer.subscriptions.create("DashboardChannel", {
   received(data) {
     updateChartData(
       Chartkick.charts['all-sales-area-chart'],
-      generateKey(new Date(data.created_at))
+      generateKey(new Date(data.created_at), true)
     )
     updateChartData(
       Chartkick.charts['sales-by-store-chart'],
