@@ -9,7 +9,7 @@ class DashboardController < ApplicationController
     @sales = Sale.all
     @sales_by_stores = Sale.joins(:store).group('stores.name')
                                          .where(created_at: 7.days.ago..Time.current)
-                                         .group_by_day(:created_at)
+                                         .group_by_minute(:created_at)
                                          .count
   end
 

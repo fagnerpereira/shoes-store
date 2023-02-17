@@ -79,5 +79,4 @@ gem 'chartkick'
 gem 'groupdate'
 gem 'appsignal'
 gem "tailwindcss-rails", "~> 2.0"
-gem 'rufus-scheduler'
 gem 'sidekiq'
