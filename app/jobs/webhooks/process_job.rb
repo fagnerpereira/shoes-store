@@ -3,7 +3,7 @@ module Webhooks
     queue_as :default
 
     def perform(webhook = nil)
-      Webhook.where(status: :pending).limit(10).each do |webhook|
+      Webhook.where(status: :pending).each do |webhook|
         webhook.process!
       end
     end

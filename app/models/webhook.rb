@@ -14,6 +14,7 @@ class Webhook < ApplicationRecord
       Sale.create!(store:, product:)
       inventory.update!(quantity: payload['inventory'].to_i)
       processed!
+      Webhooks::PurgeJob.perform_later(self)
     end
     Rails.logger.info("[Webhook#process] completed #{payload.inspect}")
   rescue StandardError => error
