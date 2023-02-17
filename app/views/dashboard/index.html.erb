@@ -4,8 +4,12 @@
 <div class="flex flex-col w-full space-y-4">
   <%= form_with(url: sales_by_stores_url, data: { turbo_frame: 'sales_chart' }, method: :get) do |form| %>
     <%= form.select(
-      :days_to_filter,
+      :filter_days,
       [['Last 7 days', 7], ['Last 28 days', 28], ['Last 90 days', 90]]
+    ) %>
+    <%= form.select(
+      :filter_interval,
+      [['Daily', 'daily'], ['Weekly', 'weekly'], ['Monthly', 'monthly']]
     ) %>
     <%= form.submit 'Filter' %>
   <% end %>

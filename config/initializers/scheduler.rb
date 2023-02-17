@@ -1,6 +1,7 @@
 require 'rufus-scheduler'
 
 rufus = Rufus::Scheduler.singleton
-rufus.every '5s' do
+
+rufus.every '10s' do
   Webhooks::ProcessJob.perform_later
 end

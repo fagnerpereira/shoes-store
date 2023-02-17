@@ -35,7 +35,7 @@ class Webhook < ApplicationRecord
     @inventory ||= Inventory.find_by!(store:, product:)
   end
 
-  def random_datetime(days = 7)
+  def random_datetime(days = 100)
     (1..days).to_a.sample.days.ago - (1..1440).to_a.sample.minutes
   end
 end
