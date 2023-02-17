@@ -1,20 +1,41 @@
 <%= turbo_stream_from 'sales' %>
 
-<%= render 'all_sales_chart' %>
-<%= render 'top_sales_by_store_chart' %>
-<%= render 'top_sales_by_product_chart' %>
+<div class="flex flex-col w-full space-y-4">
+  <div class="bg-white rounded-lg p-4 shadow-md">
+    <%= render 'all_sales_chart' %>
+  </div>
 
-<h1>Latest Sales</h1>
-<table>
-  <thead>
-    <tr>
-      <th>Store</th>
-      <th>Product</th>
-      <th>Price</th>
-      <th>Date</th>
-    </tr>
-  </thead>
-  <tbody id="sales" data-controller="sales">
-    <%= render @sales.limit(50).order(created_at: :desc) %>
-  </tbody>
-</table>
+  <div class="flex space-x-4">
+    <div class="flex-1 flex-col space-y-4">
+      <div class="bg-white rounded-lg p-4 shadow-md">
+        <%= render 'top_sales_by_store_chart' %>
+      </div>
+      <div class="bg-white rounded-lg p-4 shadow-md">
+        <%= render 'top_sales_by_product_chart' %>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg p-4 shadow-md">
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+              <th scope="col" class="px-6 py-3">
+                Store Name
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Product
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Price
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Action
+              </th>
+            </tr>
+        </thead>
+        <tbody id="sales" data-controller="sales">
+          <%= render @sales.limit(50).order(created_at: :desc) %>
+        </tbody>
+    </table>
+</div>

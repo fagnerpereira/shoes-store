@@ -1,7 +1,9 @@
 import consumer from "channels/consumer"
+import { createConsumer } from "@rails/actioncable"
 
 consumer.subscriptions.create("DashboardChannel", {
   connected() {
+    //console.log('dashboard', createConsumer('ws://localhost:8080'))
   },
 
   disconnected() {
