@@ -4,11 +4,7 @@ module Webhooks
 
     def perform(args)
       webhook = Webhook.new(payload: args)
-
-      if webhook.save
-        Webhooks::ProcessJob.perform_later(webhook)
-      else
-      end
+      webhook.save!
     end
   end
 end

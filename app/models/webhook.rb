@@ -9,11 +9,15 @@ class Webhook < ApplicationRecord
   }
 
   def process!
+    Rails.logger.info("[Webhook#process] started #{payload.inspect}")
     transaction do
       Sale.create!(store:, product:)
       inventory.update!(quantity: payload['inventory'].to_i)
       processed!
     end
+    Rails.logger.info("[Webhook#process] completed #{payload.inspect}")
+  rescue StandardError => error
+    Rails.logger.error("[Webhook#process] failed #{payload.inspect} with #{error.message}")
   end
 
   private
