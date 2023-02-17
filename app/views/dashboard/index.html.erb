@@ -1,9 +1,18 @@
 <%= turbo_stream_from 'sales' %>
 
+
 <div class="flex flex-col w-full space-y-4">
-  <div class="bg-white rounded-lg p-4 shadow-md">
+  <%= form_with(url: sales_by_stores_url, data: { turbo_frame: 'sales_chart' }, method: :get) do |form| %>
+    <%= form.select(
+      :days_to_filter,
+      [['Last 7 days', 7], ['Last 28 days', 28], ['Last 90 days', 90]]
+    ) %>
+    <%= form.submit 'Filter' %>
+  <% end %>
+
+  <%= turbo_frame_tag 'sales_chart' do %>
     <%= render 'all_sales_chart' %>
-  </div>
+  <% end %>
 
   <div class="flex space-x-4">
     <div class="flex-1 flex-col space-y-4">

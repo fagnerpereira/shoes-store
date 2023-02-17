@@ -60,6 +60,7 @@ group :development do
   gem "web-console"
   gem 'rubocop-rails', require: false
   gem 'rubocop-minitest', require: false
+  gem "dockerfile-rails", ">= 1.0"
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
@@ -77,9 +78,6 @@ end
 gem 'chartkick'
 gem 'groupdate'
 gem 'appsignal'
-
-gem "dockerfile-rails", ">= 1.0", :group => :development
-
 gem "tailwindcss-rails", "~> 2.0"
 gem 'rufus-scheduler'
 gem 'sidekiq'

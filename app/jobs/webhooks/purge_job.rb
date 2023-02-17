@@ -2,7 +2,6 @@ class Webhooks::PurgeJob < ApplicationJob
   queue_as :default
 
   def perform(webhook)
-    return
-    webhook.destroy
+    webhook.destroy if webhook.persisted?
   end
 end
