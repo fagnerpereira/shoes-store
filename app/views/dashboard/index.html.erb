@@ -1,12 +1,23 @@
-<div class="flex flex-col w-full space-y-4">
-  <%= form_with(url: dashboard_index_url, data: { turbo_frame: 'sales_chart' }, method: :get) do |form| %>
+<div class="flex flex-col w-full space-y-4" data-controller="dashboard">
+  <%= form_with(
+    url: dashboard_index_url,
+    data: { turbo_frame: 'sales_chart', action: 'change->dashboard#disabledFilterIntervalOption' },
+    method: :get) do |form| %>
     <%= form.select(
       :filter_days,
-      [['Last 7 days', 7], ['Last 28 days', 28], ['Last 90 days', 90]]
+      [['Last 7 days', 7], ['Last 28 days', 28], ['Last 90 days', 90]],
+      {},
+      data: {
+        dashboard_target: 'filterDays'
+      }
     ) %>
     <%= form.select(
       :filter_interval,
-      [['Daily', 'daily'], ['Weekly', 'weekly'], ['Monthly', 'monthly']]
+      [['Daily', 'daily'], ['Weekly', 'weekly'], ['Monthly', 'monthly']],
+      {},
+      data: {
+        dashboard_target: 'filterInterval'
+      }
     ) %>
     <%= form.submit 'Filter' %>
   <% end %>
