@@ -5,14 +5,14 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-PRODUCTS = [
-  'ADERI', 'MIRIRA', 'CAELAN',
-  'BUTAUD', 'SCHOOLER', 'SODANO',
-  'MCTYRE', 'CADAUDIA', 'RASIEN',
-  'WUMA', 'GRELIDIEN', 'CADEVEN',
-  'SEVIDE', 'ELOILLAN', 'BEODA',
-  'VENDOGNUS', 'ABOEN', 'ALALIWEN',
-  'GREG', 'BOZZA'
+PRODUCTS = %w[
+  ADERI MIRIRA CAELAN
+  BUTAUD SCHOOLER SODANO
+  MCTYRE CADAUDIA RASIEN
+  WUMA GRELIDIEN CADEVEN
+  SEVIDE ELOILLAN BEODA
+  VENDOGNUS ABOEN ALALIWEN
+  GREG BOZZA
 ].freeze
 STORES = [
   'ALDO Centre Eaton', 'ALDO Destiny USA Mall',
@@ -30,18 +30,18 @@ Store.transaction do
   Store.destroy_all if Store.any?
 
   Store.insert_all(
-    STORES.map { |name| { name: name } }
+    STORES.map { |name| { name: } }
   )
 
   Product.insert_all(
     PRODUCTS.map do |name|
-      { name: name, price: PRICES.sample.round(2) }
+      { name:, price: PRICES.sample.round(2) }
     end
   )
 
   Store.all.each do |store|
     Product.all.each do |product|
-      Inventory.create(store: store, product: product, quantity: 150)
+      Inventory.create(store:, product:, quantity: 150)
     end
   end
 end

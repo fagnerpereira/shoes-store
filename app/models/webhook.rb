@@ -9,19 +9,25 @@ class Webhook < ApplicationRecord
   }
 
   def process!
-    Rails.logger.info("[Webhook#process] started #{payload.inspect}")
-    transaction do
-      Sale.create!(store:, product:, created_at: random_datetime)
-      inventory.update!(quantity: payload['inventory'].to_i)
-      processed!
-      Webhooks::PurgeJob.perform_later(self)
+    log_around do
+      transaction do
+        Sale.create!(store:, product:, created_at: random_datetime)
+        inventory.update!(quantity: payload['inventory'].to_i)
+        processed!
+        Webhooks::PurgeJob.perform_later(self)
+      end
     end
+  end
+
+  private
+
+  def log_around
+    Rails.logger.info("[Webhook#process] started #{payload.inspect}")
+    yield
     Rails.logger.info("[Webhook#process] completed #{payload.inspect}")
   rescue StandardError => e
     Rails.logger.error("[Webhook#process] failed #{payload.inspect} with #{e.message}")
   end
-
-  private
 
   def store
     @store ||= Store.find_by!(name: payload['store'])
