@@ -1,8 +1,4 @@
-<div id="sales_by_product_container">
-  <%= bar_chart Sale.joins(:product)
-                    .group('products.name')
-                    .limit(5)
-                    .count
-                    .sort_by { |_, count| count }.reverse,
-                    id: 'sales-by-product-chart' %>
+<div class="bg-white rounded-lg p-4 shadow-md w-full" id="sales_by_product_container">
+  <%= bar_chart @top_sales_by_products,
+                id: 'sales-by-product-chart' %>
 </div>

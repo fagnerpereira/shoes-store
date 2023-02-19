@@ -1,7 +1,5 @@
-<%= turbo_stream_from 'sales' %>
-
 <div class="flex flex-col w-full space-y-4">
-  <%= form_with(url: sales_by_stores_url, data: { turbo_frame: 'sales_chart' }, method: :get) do |form| %>
+  <%= form_with(url: dashboard_index_url, data: { turbo_frame: 'sales_chart' }, method: :get) do |form| %>
     <%= form.select(
       :filter_days,
       [['Last 7 days', 7], ['Last 28 days', 28], ['Last 90 days', 90]]
@@ -14,39 +12,13 @@
   <% end %>
 
   <%= turbo_frame_tag 'sales_chart' do %>
-    <%= render 'all_sales_chart' %>
-  <% end %>
+    <div class="flex flex-col space-y-4">
+      <%= render 'all_sales_chart' %>
 
-  <div class="flex space-x-4">
-    <div class="flex-1 flex-col space-y-4">
-      <div class="bg-white rounded-lg p-4 shadow-md">
+      <div class="flex space-x-4 w-full">
         <%= render 'top_sales_by_store_chart' %>
-      </div>
-      <div class="bg-white rounded-lg p-4 shadow-md">
         <%= render 'top_sales_by_product_chart' %>
       </div>
     </div>
-    <div class="bg-white rounded-lg p-4 shadow-md">
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left text-gray-500">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-            <tr>
-              <th scope="col" class="px-6 py-3">
-                Store Name
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Product
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Price
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Action
-              </th>
-            </tr>
-        </thead>
-        <tbody id="sales" data-controller="sales">
-          <%= render @sales.limit(50).order(created_at: :desc) %>
-        </tbody>
-    </table>
+  <% end %>
 </div>

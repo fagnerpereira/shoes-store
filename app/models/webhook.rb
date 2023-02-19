@@ -11,7 +11,7 @@ class Webhook < ApplicationRecord
   def process!
     log_around do
       transaction do
-        Sale.create!(store:, product:, created_at: random_datetime)
+        Sale.create!(store:, product:)
         inventory.update!(quantity: payload['inventory'].to_i)
         processed!
         Webhooks::PurgeJob.perform_later(self)
