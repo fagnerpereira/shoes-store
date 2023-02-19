@@ -2,10 +2,8 @@ module Webhooks
   class ProcessJob < ApplicationJob
     queue_as :default
 
-    def perform(webhook = nil)
-      Webhook.where(status: :pending).each do |webhook|
-        webhook.process!
-      end
+    def perform
+      Webhook.where(status: :pending).each(&:process!)
     end
   end
 end

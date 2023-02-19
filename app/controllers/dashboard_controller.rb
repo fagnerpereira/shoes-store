@@ -3,14 +3,15 @@ class DashboardController < ApplicationController
     daily: 'group_by_day',
     weekly: 'group_by_week',
     monthly: 'group_by_month'
-  }
+  }.freeze
 
   def index
     @sales = Sale.all
-    @sales_by_stores = Sale.joins(:store).group('stores.name')
-                                         .where(created_at: 7.days.ago..Time.current)
-                                         .group_by_day(:created_at)
-                                         .count
+    @sales_by_stores = Sale.joins(:store)
+                           .group('stores.name')
+                           .where(created_at: 7.days.ago..Time.current)
+                           .group_by_day(:created_at)
+                           .count
   end
 
   def sales_by_stores
