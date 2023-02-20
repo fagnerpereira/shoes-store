@@ -25,6 +25,9 @@
               }
             ) %>
           </li>
+          <li>
+            <%= form.submit 'Filter' %>
+          </li>
       <% end %>
     </ul>
     <ul>
@@ -41,7 +44,6 @@
       <% end %>
     </ul>
   </nav>
-
   <%= turbo_frame_tag 'sales_chart' do %>
     <%= render 'all_sales_chart' %>
 

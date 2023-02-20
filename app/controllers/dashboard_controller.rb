@@ -12,16 +12,15 @@ class DashboardController < ApplicationController
   private
 
   def set_sales_charts
+    @total = sales.sum(:price)
     @sales_by_stores = sales_by_stores
     @top_sales_by_stores = top_sales_by_stores
     @top_sales_by_products = top_sales_by_products
   end
 
   def sales_by_stores
-    sales.joins(:store)
-         .group('stores.name')
-         .send(FILTER_INTERVAL[filter_interval], :created_at)
-         .count
+    sales.send(FILTER_INTERVAL[filter_interval], :created_at)
+         .sum(:price)
   end
 
   def top_sales_by_stores

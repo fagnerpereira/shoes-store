@@ -17,3 +17,11 @@
 :root {
   --primary: #EC3788;
 }
+
+section {
+  margin: 10px 0;
+  padding: 10px 30px;
+  border-radius: var(--border-radius);
+  background: var(--card-background-color);
+  box-shadow: var(--card-box-shadow);
+}

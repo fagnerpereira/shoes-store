@@ -1,4 +1,10 @@
-<div class="bg-white rounded-lg p-4 shadow-md w-full" id="sales_by_store_container">
+<section id="sales_by_store_container">
+  <hgroup>
+    <h3>Top stores</h3>
+    <h4>biggest sales by stores</h4>
+  </hgroup>
   <%= bar_chart @top_sales_by_stores,
-                id: 'sales-by-store-chart' %>
-</div>
+                id: 'sales-by-store-chart',
+                height: '400px',
+                colors: ['#8258D9'] %>
+</section>
