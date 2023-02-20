@@ -2,9 +2,16 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="dashboard"
 export default class extends Controller {
-  static targets = ['filterDays', 'filterInterval'];
+  static targets = ['filterDays', 'filterInterval', 'theme'];
 
   connect() {
+    if (localStorage.getItem('dark')) {
+      this.themeTarget.checked = localStorage.getItem('dark') === 'true';
+      this.switchTheme();
+    } else {
+      this.themeTarget.checked = false;
+      this.switchTheme();
+    }
     this.disabledFilterIntervalOption();
   }
 
@@ -18,13 +25,15 @@ export default class extends Controller {
     }
   }
 
-  switchTheme(e) {
+  switchTheme() {
     const htmlTag = document.querySelector('html');
 
-    if (e.target.checked) {
+    if (this.themeTarget.checked) {
       htmlTag.dataset.theme = 'dark';
+      localStorage.setItem('dark', true);
     } else {
       htmlTag.dataset.theme = 'light';
+      localStorage.setItem('dark', false);
     }
   }
 }
