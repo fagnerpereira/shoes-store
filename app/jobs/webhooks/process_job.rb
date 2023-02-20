@@ -3,7 +3,7 @@ module Webhooks
     queue_as :default
 
     def perform
-      Webhook.where(status: :pending).each(&:process!)
+      Webhook.pending.order(created_at: :asc).each(&:process!)
     end
   end
 end

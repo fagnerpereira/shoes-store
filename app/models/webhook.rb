@@ -1,5 +1,8 @@
 class Webhook < ApplicationRecord
   default_scope -> { order(created_at: :desc) }
+  scope :pending, -> { where(status: :pending) }
+  scope :processed, -> { where(status: :processed) }
+
   validates :payload, presence: true
 
   enum status: {
@@ -11,7 +14,7 @@ class Webhook < ApplicationRecord
   def process!
     log_around do
       transaction do
-        Sale.create!(store:, product:)
+        Sale.create!(store:, product:, created_at: random_datetime)
         inventory.update!(quantity: payload['inventory'].to_i)
         processed!
         Webhooks::PurgeJob.perform_later(self)
