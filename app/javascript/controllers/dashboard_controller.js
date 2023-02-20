@@ -17,4 +17,14 @@ export default class extends Controller {
       monthlyOption.disabled = false;
     }
   }
+
+  switchTheme(e) {
+    const htmlTag = document.querySelector('html');
+
+    if (e.target.checked) {
+      htmlTag.dataset.theme = 'dark';
+    } else {
+      htmlTag.dataset.theme = 'light';
+    }
+  }
 }

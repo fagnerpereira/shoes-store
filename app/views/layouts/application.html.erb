@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html data-theme="light">
   <head>
     <title>Poc</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body class="bg-indigo-50">
-    <main class="container mx-auto mt-8 px-5 flex">
+    <main class="container">
       <%= yield %>
     </main>
   </body>
