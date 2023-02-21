@@ -1,21 +1,23 @@
 require 'test_helper'
 
-class Webhooks::CreateJobTest < ActiveJob::TestCase
-  test 'create a webhook' do
-    args = {
-      'store' => 'store_name',
-      'model' => 'product_name',
-      'inventory' => '99'
-    }
-
-    assert_enqueued_with(job: Webhooks::ProcessJob) do
-      Webhooks::CreateJob.perform_now(args)
+module Webhooks
+  class CreateJobTest < ActiveJob::TestCase
+    setup do
+      @args = {
+        'store' => 'store_name',
+        'model' => 'product_name',
+        'inventory' => '99'
+      }
     end
 
-    created_webhook = Webhook.first
+    test 'create a webhook' do
+      assert_difference('Webhook.count') do
+        Webhooks::CreateJob.perform_now(@args)
+      end
 
-    assert created_webhook.pending?
-    assert_equal args, created_webhook.payload
-    assert_enqueued_jobs 1
+      created_webhook = Webhook.first
+      assert created_webhook.pending?
+      assert_equal @args, created_webhook.payload
+    end
   end
 end

@@ -13,20 +13,27 @@ consumer.subscriptions.create("DashboardChannel", {
   received(data) {
     updateChartData(
       Chartkick.charts['all-sales-area-chart'],
-      generateKey(new Date(data.created_at), true)
+      generateKey(new Date(data.created_at)),
+      data
     )
     updateChartData(
       Chartkick.charts['sales-by-store-chart'],
-      data.store_name
+      data.store_name,
+      data
     )
     updateChartData(
       Chartkick.charts['sales-by-product-chart'],
-      data.product_name
+      data.product_name,
+      data
     )
   }
 });
 
-function updateChartData(chart, key) {
+function updateChartData(chart, key, data) {
+  console.log(chart)
+  console.log(key);
+  console.log(data);
+
   // if key is already created then increment it by 1
   let item = chart.dataSource.find(item => {
     if (item[0] === key) {

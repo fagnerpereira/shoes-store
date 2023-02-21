@@ -1,7 +1,11 @@
-class Webhooks::PurgeJob < ApplicationJob
-  queue_as :default
+module Webhooks
+  class PurgeJob < ApplicationJob
+    queue_as :default
+    discard_on ActiveJob::DeserializationError
 
-  def perform(webhook)
-    webhook.destroy if webhook.persisted?
+    def perform(webhook_id)
+      webhook = Webhook.find_by(id: webhook_id)
+      webhook&.destroy
+    end
   end
 end

@@ -11,7 +11,7 @@ module Webhooks
 
     test 'process a webhook' do
       assert_difference -> { Sale.count } => 1 do
-        Webhooks::ProcessJob.perform_now(@webhook)
+        Webhooks::ProcessJob.perform_now
       end
       assert(@webhook.reload.processed?)
       assert_equal(@inventory.reload.quantity, webhook_params['inventory'])

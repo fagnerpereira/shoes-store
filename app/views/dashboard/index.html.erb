@@ -1,54 +1,58 @@
 <%= turbo_stream_from 'sales' %>
+<div data-controller="dashboard charts">
+  <nav>
+    <ul>
+      <%= form_with(
+        url: dashboard_index_url,
+        data: {
+          action: 'change->charts#fetchData'
+        },
+        method: :get) do |form| %>
+          <li>
+            <%= form.select(
+              :filter_days,
+              [['Last 7 days', 7], ['Last 28 days', 28], ['Last 90 days', 90]],
+              {},
+              data: {
+                charts_target: 'filterDays'
+              }
+            ) %>
+          </li>
+          <li>
+            <%= form.select(
+              :filter_interval,
+              [['Daily', 'daily'], ['Weekly', 'weekly'], ['Monthly', 'monthly']],
+              {},
+              data: {
+                charts_target: 'filterInterval'
+              }
+            ) %>
+          </li>
+          <li>
+            <button>Filter</button>
+          </li>
+      <% end %>
+    </ul>
+    <ul>
+      <%= label 'theme', 'dark' do %>
+        <strong>Dark</strong>
+        <%= check_box(
+          'theme',
+          'dark',
+          role: 'switch',
+          data: {
+            dashboard_target: 'theme',
+            action: 'click->dashboard#switchTheme'
+          }) %>
+      <% end %>
+    </ul>
+  </nav>
 
 
-<div class="flex flex-col w-full space-y-4">
-  <%= form_with(url: sales_by_stores_url, data: { turbo_frame: 'sales_chart' }, method: :get) do |form| %>
-    <%= form.select(
-      :filter_days,
-      [['Last 7 days', 7], ['Last 28 days', 28], ['Last 90 days', 90]]
-    ) %>
-    <%= form.select(
-      :filter_interval,
-      [['Daily', 'daily'], ['Weekly', 'weekly'], ['Monthly', 'monthly']]
-    ) %>
-    <%= form.submit 'Filter' %>
-  <% end %>
+  <%= render 'all_sales_chart' %>
 
-  <%= turbo_frame_tag 'sales_chart' do %>
-    <%= render 'all_sales_chart' %>
-  <% end %>
-
-  <div class="flex space-x-4">
-    <div class="flex-1 flex-col space-y-4">
-      <div class="bg-white rounded-lg p-4 shadow-md">
-        <%= render 'top_sales_by_store_chart' %>
-      </div>
-      <div class="bg-white rounded-lg p-4 shadow-md">
-        <%= render 'top_sales_by_product_chart' %>
-      </div>
-    </div>
-    <div class="bg-white rounded-lg p-4 shadow-md">
-
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left text-gray-500">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-            <tr>
-              <th scope="col" class="px-6 py-3">
-                Store Name
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Product
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Price
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Action
-              </th>
-            </tr>
-        </thead>
-        <tbody id="sales" data-controller="sales">
-          <%= render @sales.limit(50).order(created_at: :desc) %>
-        </tbody>
-    </table>
+  <div class="grid">
+    <%= render 'top_sales_by_store_chart' %>
+    <%= render 'top_sales_by_product_chart' %>
+  </div>
 </div>

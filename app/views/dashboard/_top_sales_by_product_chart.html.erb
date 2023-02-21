@@ -1,8 +1,8 @@
-<div id="sales_by_product_container">
-  <%= bar_chart Sale.joins(:product)
-                    .group('products.name')
-                    .limit(5)
-                    .count
-                    .sort_by { |_, count| count }.reverse,
-                    id: 'sales-by-product-chart' %>
-</div>
+<section id="sales_by_product_container">
+  <hgroup>
+    <h3>Top products</h3>
+    <h4>biggest sales by products</h4>
+  </hgroup>
+
+  <div data-charts-target="salesByProducts" style="height: 400px;"></div>
+</section>

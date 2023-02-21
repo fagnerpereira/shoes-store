@@ -1,7 +1,9 @@
-require "test_helper"
+require 'test_helper'
 
-class Webhooks::PurgeJobTest < ActiveJob::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+module Webhooks
+  class PurgeJobTest < ActiveJob::TestCase
+    # test "the truth" do
+    #   assert true
+    # end
+  end
 end

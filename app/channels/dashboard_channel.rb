@@ -3,7 +3,5 @@ class DashboardChannel < ApplicationCable::Channel
     stream_from 'charts'
   end
 
-  def unsubscribed
-    puts 'unsubscribed'
-  end
+  def unsubscribed; end
 end

@@ -1,0 +1,5 @@
+:scheduler:
+  :schedule:
+    process_webhook:
+      cron: '* * * * * *'   # Runs once per minute
+      class: Webhooks::ProcessJob
