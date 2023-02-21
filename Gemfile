@@ -80,3 +80,5 @@ gem 'chartkick'
 gem 'groupdate'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
+gem 'graphql'
+gem "graphiql-rails", group: :development
