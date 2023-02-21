@@ -1,9 +1,12 @@
-<div data-controller="dashboard">
+<%= turbo_stream_from 'sales' %>
+<div data-controller="dashboard charts">
   <nav>
     <ul>
       <%= form_with(
         url: dashboard_index_url,
-        data: { turbo_frame: 'sales_chart', action: 'change->dashboard#disabledFilterIntervalOption' },
+        data: {
+          action: 'change->charts#fetchData'
+        },
         method: :get) do |form| %>
           <li>
             <%= form.select(
@@ -11,7 +14,7 @@
               [['Last 7 days', 7], ['Last 28 days', 28], ['Last 90 days', 90]],
               {},
               data: {
-                dashboard_target: 'filterDays'
+                charts_target: 'filterDays'
               }
             ) %>
           </li>
@@ -21,7 +24,7 @@
               [['Daily', 'daily'], ['Weekly', 'weekly'], ['Monthly', 'monthly']],
               {},
               data: {
-                dashboard_target: 'filterInterval'
+                charts_target: 'filterInterval'
               }
             ) %>
           </li>
@@ -44,12 +47,12 @@
       <% end %>
     </ul>
   </nav>
-  <%= turbo_frame_tag 'sales_chart' do %>
-    <%= render 'all_sales_chart' %>
 
-    <div class="grid">
-      <%= render 'top_sales_by_store_chart' %>
-      <%= render 'top_sales_by_product_chart' %>
-    </div>
-  <% end %>
+
+  <%= render 'all_sales_chart' %>
+
+  <div class="grid">
+    <%= render 'top_sales_by_store_chart' %>
+    <%= render 'top_sales_by_product_chart' %>
+  </div>
 </div>

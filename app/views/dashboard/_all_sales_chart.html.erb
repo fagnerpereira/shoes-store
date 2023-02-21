@@ -3,5 +3,5 @@
     <h3><%= number_to_currency(@total) %></h3>
   </header>
 
-  <%= line_chart @sales_by_stores, id: 'all-sales-area-chart' %>
+  <div data-charts-target="sales" style="height: 300px;"></div>
 </section>

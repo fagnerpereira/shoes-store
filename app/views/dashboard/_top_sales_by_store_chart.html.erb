@@ -3,8 +3,6 @@
     <h3>Top stores</h3>
     <h4>biggest sales by stores</h4>
   </hgroup>
-  <%= bar_chart @top_sales_by_stores,
-                id: 'sales-by-store-chart',
-                height: '400px',
-                colors: ['#8258D9'] %>
+
+  <div data-charts-target="salesByStores" style="height: 400px;"></div>
 </section>

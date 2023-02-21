@@ -4,8 +4,5 @@
     <h4>biggest sales by products</h4>
   </hgroup>
 
-  <%= bar_chart @top_sales_by_products,
-                colors: ['#E81370'],
-                height: '400px',
-                id: 'sales-by-product-chart' %>
+  <div data-charts-target="salesByProducts" style="height: 400px;"></div>
 </section>

@@ -9,32 +9,35 @@ class DashboardController < ApplicationController
 
   before_action :set_sales_charts
 
+  def sales_by_stores
+    data = sales.send(FILTER_INTERVAL[filter_interval], :created_at)
+                .sum(:price)
+
+    render json: data.to_json
+  end
+
+  def top_sales_by_stores
+    data = sales.joins(:store)
+         .group('stores.name')
+         .count
+         .sort_by { |_, count| count }.reverse
+
+    render json: data.to_json
+  end
+
+  def top_sales_by_products
+    data = sales.joins(:product)
+         .group('products.name')
+         .count
+         .sort_by { |_, count| count }.reverse
+
+    render json: data.to_json
+  end
+
   private
 
   def set_sales_charts
     @total = sales.sum(:price)
-    @sales_by_stores = sales_by_stores
-    @top_sales_by_stores = top_sales_by_stores
-    @top_sales_by_products = top_sales_by_products
-  end
-
-  def sales_by_stores
-    sales.send(FILTER_INTERVAL[filter_interval], :created_at)
-         .sum(:price)
-  end
-
-  def top_sales_by_stores
-    sales.joins(:store)
-         .group('stores.name')
-         .count
-         .sort_by { |_, count| count }.reverse
-  end
-
-  def top_sales_by_products
-    sales.joins(:product)
-         .group('products.name')
-         .count
-         .sort_by { |_, count| count }.reverse
   end
 
   def sales
