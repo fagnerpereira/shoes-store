@@ -57,7 +57,7 @@ end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
-  gem 'dockerfile-rails', '>= 1.0'
+  gem 'dockerfile-rails'
   gem 'rubocop-minitest', require: false
   gem 'rubocop-rails', require: false
   gem 'web-console'
@@ -78,7 +78,6 @@ end
 gem 'appsignal'
 gem 'chartkick'
 gem 'groupdate'
-gem 'appsignal'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 gem 'hiredis'
