@@ -1,50 +1,88 @@
-version: "3.8"
+x-app: &default-app
+  build:
+    context: "."
+    target: "app"
+    args:
+      - "RAILS_ENV=${RAILS_ENV:-production}"
+      - "NODE_ENV=${NODE_ENV:-production}"
+  depends_on:
+    - "postgres"
+    - "redis"
+  env_file:
+    - ".env"
+  restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+  stop_grace_period: "3s"
+  tty: true
+  volumes:
+    - "${DOCKER_WEB_VOLUME:-./public:/app/public}"
+
 services:
-  web:
-    build:
-      context: .
-      args:
-        UID: ${UID:-1000}
-        GID: ${GID:-${UID:-1000}}
-    ports:
-      - "3000:3000"
-    environment:
-      - RAILS_MASTER_KEY=$RAILS_MASTER_KEY
-      - REDIS_URL=redis://redis-db:6379
-      - DATABASE_URL=postgres://root:password@postgres-db/
-    depends_on:
-      redis-db:
-        condition: service_started
-      postgres-db:
-        condition: service_healthy
-
-  postgres-db:
-    image: postgres
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: password
+  postgres:
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_POSTGRES_CPUS:-0}"
+          memory: "${DOCKER_POSTGRES_MEMORY:-0}"
+    env_file:
+      - ".env"
+    image: "postgres:14.4-bullseye"
+    restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+    stop_grace_period: "3s"
     volumes:
-      - ./tmp/db:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+      - "postgres:/var/lib/postgresql/data"
+
+  redis:
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_REDIS_CPUS:-0}"
+          memory: "${DOCKER_REDIS_MEMORY:-0}"
+    env_file:
+      - ".env"
+    image: "redis:7.0.2-bullseye"
+    restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+    stop_grace_period: "3s"
+    volumes:
+      - "redis:/data"
+
+  web:
+    <<: *default-app
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_WEB_CPUS:-0}"
+          memory: "${DOCKER_WEB_MEMORY:-0}"
     healthcheck:
-      test: pg_isready
-      interval: 2s
-      timeout: 5s
-      retries: 30
+      test: "${DOCKER_WEB_HEALTHCHECK_TEST:-curl localhost:8000/up}"
+      interval: "60s"
+      timeout: "3s"
+      start_period: "5s"
+      retries: 3
+    ports:
+      - "${DOCKER_WEB_PORT_FORWARD:-127.0.0.1:8000}:8000"
 
-  redis-db:
-    image: redis
+  worker:
+    <<: *default-app
+    command: "bundle exec sidekiq -C config/sidekiq.yml"
+    entrypoint: []
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_WORKER_CPUS:-0}"
+          memory: "${DOCKER_WORKER_MEMORY:-0}"
 
-  sidekiq:
-    build: .
-    command: bundle exec sidekiq
-    environment:
-      - RAILS_MASTER_KEY=$RAILS_MASTER_KEY
-      - REDIS_URL=redis://redis-db:6379
-      - DATABASE_URL=postgres://root:password@postgres-db/
-    depends_on:
-      redis-db:
-        condition: service_started
-      postgres-db:
-        condition: service_healthy
+  cable:
+    <<: *default-app
+    command: "puma -p 28080 cable/config.ru"
+    entrypoint: []
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_CABLE_CPUS:-0}"
+          memory: "${DOCKER_CABLE_MEMORY:-0}"
+    ports:
+      - "${DOCKER_CABLE_PORT_FORWARD:-127.0.0.1:28080}:28080"
+
+volumes:
+  postgres: {}
+  redis: {}

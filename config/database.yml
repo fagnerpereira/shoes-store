@@ -22,8 +22,7 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
-  <<: *default
-  database: poc_development
+  url: postgresql://postgres:5tC1IDR9nSkJQXc0d6Md@database-1.ctpogeoxvjli.us-east-1.rds.amazonaws.com/database-1
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
