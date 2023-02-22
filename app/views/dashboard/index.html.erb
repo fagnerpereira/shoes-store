@@ -28,9 +28,6 @@
               }
             ) %>
           </li>
-          <li>
-            <button>Filter</button>
-          </li>
       <% end %>
     </ul>
     <ul>
@@ -49,7 +46,7 @@
   </nav>
 
 
-  <%= render 'all_sales_chart' %>
+  <%= render 'all_sales_chart', total: @total %>
 
   <div class="grid">
     <%= render 'top_sales_by_store_chart' %>

@@ -2,7 +2,10 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="charts"
 export default class extends Controller {
-  static targets = ['sales', 'salesByProducts', 'salesByStores', 'filterDays', 'filterInterval']
+  static targets = [
+    'sales', 'salesByProducts', 'salesByStores',
+    'filterDays', 'filterInterval', 'total'
+  ]
 
   connect() {
     this.disabledFilterIntervalOption();
@@ -27,16 +30,20 @@ export default class extends Controller {
     this.renderSalesByProductsChart();
   }
 
-  renderSalesChart() {
-    console.log('sales')
-    new Chartkick['LineChart'](
+  // i had to make a fetch not using charkick api, since the api has not event or doesnt return a promise after fetch endpoint
+  async renderSalesChart() {
+    let response = await fetch(`/sales_by_stores?${this.filterQuery()}`);
+    let data = await response.json();
+    let total = Object.values(data).reduce( (acc, curr) => acc + curr );
+
+    this.totalTarget.textContent = total.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    new Chartkick.LineChart(
       this.salesTarget,
-      `/sales_by_stores?${this.filterQuery()}`
-    )
+      data
+    );
   }
 
   renderSalesByStoresChart() {
-    console.log('sales by stores')
     new Chartkick['BarChart'](
       this.salesByStoresTarget,
       `/top_sales_by_stores?${this.filterQuery()}`,
@@ -45,7 +52,6 @@ export default class extends Controller {
   }
 
   renderSalesByProductsChart() {
-    console.log('sales by products')
     new Chartkick['BarChart'](
       this.salesByProductsTarget,
       `/top_sales_by_products?${this.filterQuery()}`,
