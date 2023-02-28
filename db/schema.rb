@@ -41,7 +41,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_20_144838) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.float "price"
-    t.index ["created_at"], name: "index_sales_on_created_at"
     t.index ["product_id"], name: "index_sales_on_product_id"
     t.index ["store_id"], name: "index_sales_on_store_id"
   end
