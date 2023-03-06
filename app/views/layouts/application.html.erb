@@ -16,7 +16,7 @@
       <ul>
         <li>
           <%= link_to dashboard_index_url do %>
-            <strong>Aldo Store</strong>
+            <strong>Home</strong>
           <% end %>
         </li>
       </ul>
@@ -28,8 +28,15 @@
           <%= link_to 'Products', products_path %>
         </li>
       </ul>
+      <ul>
+        <li>
+          Notifications
+        </li>
+      </ul>
     </nav>
 
-    <%= yield %>
+    <main>
+      <%= yield %>
+    </main>
   </body>
 </html>
