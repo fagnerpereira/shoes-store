@@ -1,11 +1,3 @@
-<h1>New store</h1>
-
 <%= turbo_frame_tag Store.new do %>
   <%= render 'form', store: @store %>
 <% end %>
-
-<br>
-
-<div>
-  <%= link_to "Back to stores", stores_path %>
-</div>

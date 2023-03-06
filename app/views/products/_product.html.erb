@@ -1,0 +1,13 @@
+<tr id="<%= dom_id product %>">
+  <td scope="col">
+    <%= link_to product do %>
+      <%= product.name %>
+    <% end %>
+  </td>
+  <th scope="col">
+    <%= number_to_currency(product.price) %>
+  </th>
+  <td>
+    <%= button_to 'destroy', product, method: :delete %>
+  </<td>
+</tr>

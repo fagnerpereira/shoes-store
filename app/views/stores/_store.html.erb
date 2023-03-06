@@ -4,6 +4,10 @@
       <%= store.name %>
     <% end %>
   </td>
-  <th scope="col"><%= number_to_currency(store.sales.sum(:price)) %></th>
-  <td><%= button_to 'destroy', store, method: :delete %></<td>
+  <th scope="col">
+    <%= number_to_currency(store.sales.sum(:price)) %>
+  </th>
+  <td>
+    <%= button_to 'destroy', store, method: :delete %>
+  </<td>
 </tr>

@@ -2,7 +2,7 @@ class StoresController < ApplicationController
   before_action :set_store, only: %i[show destroy]
 
   def index
-    @stores = Store.order(created_at: :desc)
+    @stores = Store.all.order(created_at: :desc)
   end
 
   def new

@@ -1,7 +1,12 @@
 <p style="color: green"><%= notice %></p>
 
 <%= turbo_frame_tag Store.new do %>
-  <%= link_to 'New store', new_store_path, role: 'button', class: 'outline' %>
+  <%= link_to(
+    'New store',
+    new_store_path,
+    role: 'button',
+    class: 'outline'
+  ) %>
 <% end %>
 
 <table id="stores">

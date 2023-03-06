@@ -1,0 +1,22 @@
+<p style="color: green"><%= notice %></p>
+
+<%= turbo_frame_tag Product.new do %>
+  <%= link_to(
+    'New product',
+    new_product_path,
+    role: 'button',
+    class: 'outline'
+  ) %>
+<% end %>
+
+<table id="products">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col"></th>
+  </thead>
+  <tbody>
+    <%= render @products %>
+  </tbody>
+</table>
