@@ -1,0 +1,24 @@
+<p style="color: green"><%= notice %></p>
+
+<%= turbo_frame_tag Store.new do %>
+  <%= link_to 'New store', new_store_path, role: 'button', class: 'outline' %>
+<% end %>
+
+<table id="stores">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Sales</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render @stores %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th scope="row">Total</th>
+      <td><%= number_to_currency(Sale.sum(:price)) %></td>
+    </tr>
+  </tfoot>
+</table>

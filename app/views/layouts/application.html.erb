@@ -12,6 +12,22 @@
   </head>
 
   <body class="container">
+    <nav>
+      <ul>
+        <li>
+          <%= link_to dashboard_index_url do %>
+            <strong>Aldo Store</strong>
+          <% end %>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <%= link_to 'Stores', stores_path %>
+        </li>
+        <li><a href="#">Products</a></li>
+      </ul>
+    </nav>
+
     <%= yield %>
   </body>
 </html>
