@@ -32,8 +32,12 @@ export default class extends Controller {
 
   // i had to make a fetch not using charkick api, since the api has not event or doesnt return a promise after fetch endpoint
   async renderSalesChart() {
-    let response = await fetch(`/sales_by_stores?${this.filterQuery()}`);
-    let data = await response.json();
+    const response = await fetch(`/sales_by_stores?${this.filterQuery()}`);
+    const data = await response.json();
+    const values = Object.values(data);
+
+    if (values.length === 0) return;
+
     let total = Object.values(data).reduce( (acc, curr) => acc + curr );
 
     this.totalTarget.textContent = total.toLocaleString('en-US', { style: 'currency', currency: 'USD' });

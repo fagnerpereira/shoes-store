@@ -1,0 +1,35 @@
+<%= form_with(
+  model: store,
+  data: {
+    controller: 'forms',
+    action: 'turbo:before-fetch-request->forms#beforeSubmit'
+}) do |form| %>
+  <article>
+    <h3>New Store</h3>
+    <% if store.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(store.errors.count, "error") %> prohibited this store from being saved:</h2>
+
+        <ul>
+          <% store.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form.text_field(
+      :name,
+      placeholder: 'Store Name',
+      data: { forms_target: 'field', action: 'input->forms#validatesField' }
+    ) %>
+    <footer>
+      <div class="grid">
+        <div></div>
+        <div></div>
+        <%= link_to 'Cancel', stores_path, role: 'button', class: 'btn secondary' %>
+        <button>Confirm</button>
+      </div>
+    </footer>
+  </article>
+<% end %>

@@ -1,0 +1,10 @@
+<%= turbo_stream.prepend 'products', @product %>
+<%= turbo_stream.update(
+  Product.new,
+  link_to(
+    'New product',
+    new_product_path,
+    role: 'button',
+    class: 'outline'
+  )
+) %>

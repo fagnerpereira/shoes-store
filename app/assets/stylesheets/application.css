@@ -25,3 +25,9 @@ section {
   background: var(--card-background-color);
   box-shadow: var(--card-box-shadow);
 }
+
+button {
+  display: block;
+  width: 100%;
+  margin: 0;
+}

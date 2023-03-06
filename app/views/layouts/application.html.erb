@@ -12,6 +12,31 @@
   </head>
 
   <body class="container">
-    <%= yield %>
+    <nav>
+      <ul>
+        <li>
+          <%= link_to dashboard_index_url do %>
+            <strong>Home</strong>
+          <% end %>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <%= link_to 'Stores', stores_path %>
+        </li>
+        <li>
+          <%= link_to 'Products', products_path %>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          Notifications
+        </li>
+      </ul>
+    </nav>
+
+    <main>
+      <%= yield %>
+    </main>
   </body>
 </html>
