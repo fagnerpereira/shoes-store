@@ -9,6 +9,10 @@ class StoresController < ApplicationController
     @store = Store.new
   end
 
+  def show
+    @inventories = @store.inventories.includes(:product)
+  end
+
   def create
     @store = Store.new(store_params)
 

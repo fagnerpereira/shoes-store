@@ -31,3 +31,24 @@ button {
   width: 100%;
   margin: 0;
 }
+
+.label {
+  max-width: 100px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.stock-label-low {
+  background-color: #faaaaa;
+  color: #a10000;
+}
+
+.stock-label-middle {
+  background-color: #f7f1ba;
+  color: #a18e00;
+}
+
+.stock-label-high {
+  background-color: #baf7cc;
+  color: #00a138;
+}

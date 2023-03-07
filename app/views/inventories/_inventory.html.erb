@@ -1,0 +1,10 @@
+<tr>
+  <th scope="row"><%= inventory.product.name %></th>
+  <td><%= inventory.quantity %></td>
+  <td>
+    <div class="label stock-label-<%= inventory.stock %>">
+      <strong><%= inventory.stock %></strong>
+    </div>
+  </td>
+  <td><%= inventory.updated_at.strftime('%y-%m-%d %H:%M') %></td>
+</tr>

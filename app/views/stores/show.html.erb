@@ -1,10 +1,17 @@
-<p style="color: green"><%= notice %></p>
+<%= link_to "Back to stores", stores_path %>
+<%= @store.name %>
+<%= number_to_currency(@store.total_sales) %>
 
-<%= render @store %>
-
-<div>
-  <%= link_to "Edit this store", edit_store_path(@store) %> |
-  <%= link_to "Back to stores", stores_path %>
-
-  <%= button_to "Destroy this store", @store, method: :delete %>
-</div>
+<table role="grid">
+  <thead>
+    <tr>
+      <th scope="col">Product</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Stock</th>
+      <th scope="col">Last update</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render @inventories %>
+  </tbody>
+</table>
