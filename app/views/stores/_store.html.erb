@@ -5,7 +5,7 @@
     <% end %>
   </td>
   <th scope="col">
-    <%= number_to_currency(store.sales.sum(:price)) %>
+    <%= number_to_currency(store.total_sales) %>
   </th>
   <td>
     <%= button_to 'destroy', store, method: :delete %>

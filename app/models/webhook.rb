@@ -12,7 +12,7 @@ class Webhook < ApplicationRecord
   }
 
   def process!
-    log_around do
+    log do
       transaction do
         Sale.create!(store:, product:, price: product.price, created_at: random_datetime)
         inventory.update!(quantity: payload['inventory'].to_i)
@@ -24,7 +24,7 @@ class Webhook < ApplicationRecord
 
   private
 
-  def log_around
+  def log
     Rails.logger.info("[Webhook#process] started #{payload.inspect}")
     yield
     Rails.logger.info("[Webhook#process] completed #{payload.inspect}")
@@ -41,7 +41,7 @@ class Webhook < ApplicationRecord
   end
 
   def inventory
-    @inventory ||= Inventory.find_by!(store:, product:)
+    @inventory ||= Inventory.find_or_create_by!(store:, product:)
   end
 
   def random_datetime(days = 100)

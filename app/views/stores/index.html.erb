@@ -23,7 +23,7 @@
   <tfoot>
     <tr>
       <th scope="row">Total</th>
-      <td><%= number_to_currency(Sale.sum(:price)) %></td>
+      <td><%= number_to_currency(@stores.sum(:total_sales)) %></td>
     </tr>
   </tfoot>
 </table>

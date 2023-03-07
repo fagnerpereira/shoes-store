@@ -4,7 +4,7 @@ class Sale < ApplicationRecord
 
   validates :quantity, presence: true
   before_validation :set_metadata, on: :create
-  after_create_commit :broadcast_charts_data
+  after_create_commit :broadcast_charts_data, :update_store_total_sales
 
   def store_name
     metadata.dig 'store', 'name'
@@ -19,6 +19,14 @@ class Sale < ApplicationRecord
   end
 
   private
+
+  def update_store_total_sales
+    return if Rails.cache.read('stores_cached')
+
+    Rails.cache.write('stores_cached', true, expires_in: 10.seconds)
+
+    Stores::UpdateTotalSalesJob.perform_later(store)
+  end
 
   def broadcast_charts_data
     return if Rails.cache.read('charts_cached')
