@@ -40,7 +40,10 @@ export default class extends Controller {
 
     let total = Object.values(data).reduce( (acc, curr) => acc + curr );
 
-    this.totalTarget.textContent = total.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    this.totalTarget.textContent = total.toLocaleString(
+      'en-US',
+      { style: 'currency', currency: 'USD' }
+    );
     new Chartkick.LineChart(
       this.salesTarget,
       data

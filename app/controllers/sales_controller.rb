@@ -3,6 +3,7 @@ class SalesController < ApplicationController
 
   def index
     @sales = Sale.all.order(created_at: :desc)
+    @total = @sales.sum(:price)
   end
 
   def show

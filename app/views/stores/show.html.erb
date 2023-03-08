@@ -1,5 +1,56 @@
 <%= link_to "Back to stores", stores_path %>
+
+<div data-controller="dashboard charts">
+  <nav>
+    <ul>
+      <%= form_with(
+        url: dashboard_index_url,
+        data: {
+          action: 'change->charts#fetchData'
+        },
+        method: :get) do |form| %>
+          <li>
+            <%= form.select(
+              :filter_days,
+              [['Last 7 days', 7], ['Last 28 days', 28], ['Last 90 days', 90]],
+              {},
+              data: {
+                charts_target: 'filterDays'
+              }
+            ) %>
+          </li>
+          <li>
+            <%= form.select(
+              :filter_interval,
+              [['Daily', 'daily'], ['Weekly', 'weekly'], ['Monthly', 'monthly']],
+              {},
+              data: {
+                charts_target: 'filterInterval'
+              }
+            ) %>
+          </li>
+      <% end %>
+    </ul>
+    <ul>
+      <%= label 'theme', 'dark' do %>
+        <strong>Dark</strong>
+        <%= check_box(
+          'theme',
+          'dark',
+          role: 'switch',
+          data: {
+            dashboard_target: 'theme',
+            action: 'click->dashboard#switchTheme'
+          }) %>
+      <% end %>
+    </ul>
+  </nav>
+
+  <%= render 'chart', total: @total %>
+</div>
+
 <%= @store.name %>
+
 <%= number_to_currency(@store.total_sales) %>
 
 <table role="grid">
