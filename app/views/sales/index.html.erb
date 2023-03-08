@@ -1,0 +1,19 @@
+<h1>Sales</h1>
+
+<div id="sales">
+  <table role="grid">
+    <thead>
+      <tr>
+        <th scope="col">Store</th>
+        <th scope="col">Product</th>
+        <th scope="col">Price</th>
+        <th scope="col">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @sales %>
+    </tbody>
+  </table>
+</div>
+
+<%= link_to "New sale", new_sale_path %>
