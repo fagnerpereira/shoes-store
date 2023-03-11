@@ -23,16 +23,6 @@ When I create a new record in the Sales table I perform some important actions:
 For the rest, I simply created some validation tests and the webhook processing flow. I created some graphics on the screen to show stores that sold the most, products that sold the most, I put a pagination because I created a lot of sales to test performance. I used appsignal to add improvements as I worked on the project and tested it.
 
 
-
-## Running Tests
-
-To run tests, run the following command
-
-```bash
-  rails t
-```
-
-
 ## Demo
 
 https://damp-surf-4903.fly.dev/
@@ -140,6 +130,15 @@ Example
     end
   }
 ```
+
+## Running Tests
+
+To run tests, run the following command
+
+```bash
+  rails t
+```
+
 ## Tech Stack
 
 **Client:** Stimulus, Pico.css, Chartjs
