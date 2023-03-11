@@ -33,19 +33,6 @@
           </li>
       <% end %>
     </ul>
-    <ul>
-      <%= label 'theme', 'dark' do %>
-        <strong>Dark</strong>
-        <%= check_box(
-          'theme',
-          'dark',
-          role: 'switch',
-          data: {
-            dashboard_target: 'theme',
-            action: 'click->dashboard#switchTheme'
-          }) %>
-      <% end %>
-    </ul>
   </nav>
 
   <%= render 'chart', total: @total %>
