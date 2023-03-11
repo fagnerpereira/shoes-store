@@ -1,6 +1,6 @@
 <%= link_to "Back to stores", stores_path %>
 
-<div data-controller="dashboard charts">
+<div data-controller="charts">
   <nav>
     <ul>
       <%= form_with(
@@ -29,19 +29,6 @@
               }
             ) %>
           </li>
-      <% end %>
-    </ul>
-    <ul>
-      <%= label 'theme', 'dark' do %>
-        <strong>Dark</strong>
-        <%= check_box(
-          'theme',
-          'dark',
-          role: 'switch',
-          data: {
-            dashboard_target: 'theme',
-            action: 'click->dashboard#switchTheme'
-          }) %>
       <% end %>
     </ul>
   </nav>

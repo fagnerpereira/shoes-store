@@ -1,8 +1,10 @@
 class SalesController < ApplicationController
   before_action :set_sale, only: :show
 
+  include Pagy::Backend
+
   def index
-    @sales = Sale.all.order(created_at: :desc)
+    @pagy, @sales = pagy Sale.all.order(created_at: :desc)
     @total = @sales.sum(:price)
   end
 
