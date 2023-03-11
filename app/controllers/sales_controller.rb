@@ -8,6 +8,8 @@ class SalesController < ApplicationController
     @total = @sales.sum(:price)
   end
 
+  def show; end
+
   private
 
   def set_sale

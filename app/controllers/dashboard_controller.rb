@@ -18,18 +18,18 @@ class DashboardController < ApplicationController
 
   def top_sales_by_stores
     data = sales.joins(:store)
-         .group('stores.name')
-         .count
-         .sort_by { |_, count| count }.reverse
+                .group('stores.name')
+                .count
+                .sort_by { |_, count| count }.reverse
 
     render json: data.to_json
   end
 
   def top_sales_by_products
     data = sales.joins(:product)
-         .group('products.name')
-         .count
-         .sort_by { |_, count| count }.reverse
+                .group('products.name')
+                .count
+                .sort_by { |_, count| count }.reverse
 
     render json: data.to_json
   end

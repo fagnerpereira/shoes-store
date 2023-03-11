@@ -32,19 +32,25 @@ class Sale < ApplicationRecord
     return if Rails.cache.read('charts_cached')
 
     Rails.cache.write('charts_cached', true, expires_in: 10.seconds)
+  end
 
+  def replace_all_sales_container
     broadcast_replace_later_to(
       'sales',
       target: 'all_sales_container',
       partial: 'dashboard/all_sales_chart'
     )
+  end
 
+  def replace_sales_by_product_container
     broadcast_replace_later_to(
       'sales',
       target: 'sales_by_product_container',
       partial: 'dashboard/top_sales_by_product_chart'
     )
+  end
 
+  def replace_sales_by_store_container
     broadcast_replace_later_to(
       'sales',
       target: 'sales_by_store_container',

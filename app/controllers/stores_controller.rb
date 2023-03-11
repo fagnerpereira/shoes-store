@@ -18,7 +18,7 @@ class StoresController < ApplicationController
 
     respond_to do |format|
       if @store.save
-        format.html { redirect_to store_url(@store), notice: "Store was successfully created." }
+        format.html { redirect_to store_url(@store), notice: 'Store was successfully created.' }
         format.turbo_stream
       else
         format.html { render :new, status: :unprocessable_entity }

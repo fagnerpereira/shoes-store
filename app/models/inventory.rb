@@ -6,10 +6,9 @@ class Inventory < ApplicationRecord
   validates :store, uniqueness: { scope: :product }
 
   def stock
-    case
-    when quantity < 20
+    if quantity < 20
       'low'
-    when quantity < 60
+    elsif quantity < 60
       'middle'
     else
       'high'
